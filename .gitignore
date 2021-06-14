@@ -1,0 +1,5 @@
+.DS_Store
+models/.DS_Store
+models/__pycache__/__init__.cpython-35.pyc
+models/__pycache__/print_contact_info.cpython-35.pyc
+static/.DS_Store

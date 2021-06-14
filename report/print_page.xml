@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="paperformat_page" model="report.paperformat">
+		<field name="name">Contact Info and Address</field>
+		<field name="default" eval="True"/>
+		<field name="format">A5</field>
+		<field name="orientation">Landscape</field>
+		<field name="margin_top">12</field>
+		<field name="margin_bottom">12</field>
+		<field name="margin_left">6</field>
+		<field name="margin_right">6</field>
+		<field name="header_line" eval="False"/>
+		<field name="header_spacing">7</field>
+		<field name="dpi">90</field>
+	</record>
+
+	<report
+		id="action_report_page"
+		string="Contact Info and Address"
+		model="res.partner"
+		report_type="qweb-pdf"
+		name="print_contact.page"
+		print_report_name="'Contact page'"
+		paperformat="paperformat_page"
+	/>
+	
+	<template id="page">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="contact">
+				<div class="article">
+					<table style="font-size:16px;font-style:bold">
+						<tr>
+							<td style="font-size:18px;font-style:bold">
+								<span style="font-size:22px;font-weight: bold;">
+									PT KITA
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								http://ptkita.my.id/
+							</td>
+						</tr>
+						<tr>
+							<td>
+								ptkita4uierp20202021@gmail.com
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Jl. Margonda Raya, Pondok Cina,
+								Kecamatan Beji, Kota Depok, Jawa Barat 16424
+								Indonesia
+							</td>
+						</tr>
+					</table>
+					<br/>
+					<hr style="background:black;height:2px"/>
+					<br/>
+					<table style="font-size:20px">
+						<tr>
+							<th/>
+							<th/>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-weight: bold">
+									Grantee 	:
+								</span>
+							</td>
+							<td>
+								<ul style="list-style:none;white-space: nowrap">
+										<t t-if="contact.title and contact.company_type=='person'"><t t-esc="contact.title.name"/></t>
+										<t t-esc="contact.name"/> <t t-if="contact.company_type=='company'"> (Company)</t>
+								</ul>
+							</td>
+						</tr>
+					</table>
+					<table style="font-size:20px">
+						<tr>
+							<th/>
+							<th/>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-weight: bold;">
+									Address 	:
+								</span>
+							</td>
+							<td>
+								<ul style="list-style:none;white-space: nowrap">
+									<li t-if="contact.street">
+										<t t-esc="contact.street"/>
+									</li>
+
+									<li t-if="contact.street2">
+										<t t-esc="contact.street2"/>
+									</li>
+
+									<li t-if="contact.city or contact.zip">
+										<t t-esc="contact.city"/>, <t t-esc="contact.zip"/>
+									</li>
+
+									<li t-if="contact.country_id">
+										<t t-esc="contact.country_id.name"/>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+					<table style="font-size:20px">
+						<tr>
+							<th/>
+							<th/>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-weight: bold;">
+									Contact 	:
+								</span>
+							</td>
+							<td>
+								<ul style="list-style:none;white-space: nowrap">
+									<li t-if="contact.phone">
+										Phone    : <t t-esc="contact.phone" />
+									</li>
+									<li t-if="contact.mobile">
+										Mobile   : <t t-esc="contact.mobile"/>
+									</li>
+									<li t-if="contact.email">
+										E-mail   : <t t-esc="contact.email"/>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</t>
+		</t>
+	</template>
+</odoo>
